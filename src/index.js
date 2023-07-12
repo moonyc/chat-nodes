@@ -18,7 +18,13 @@ io.on('connection', (socket) => {
     console.log('New WebSocket Connection')
 
     // send an event from the server to the client
-    socket.emit('countUpdated')
+    socket.emit('countUpdated', count)
+
+    // listen to the event from the client
+    socket.on('increment', () => {
+        count++
+       io.emit('countUpdated', count)
+    })
 })
 
 server.listen(port, () => {
