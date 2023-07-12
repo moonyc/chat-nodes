@@ -13,8 +13,12 @@ const port = process.env.PORT || 3000
 
 app.use(express.static(dir)) // app.use() mounts a specified middleware function at the specified path
 
-io.on('connection', () => {
+let count = 0 
+io.on('connection', (socket) => {
     console.log('New WebSocket Connection')
+
+    // send an event from the server to the client
+    socket.emit('countUpdated')
 })
 
 server.listen(port, () => {
